@@ -40,11 +40,14 @@
                   Login as Admin
                </button>
 
-               <p v-show="unsuccessful" class="failed">
+               <p v-show="!successful" class="failed">
                    *Sorry, the email {{email}} is incorrect.
                </p>
 
             </div>
+
+            <!-- Display clients -->
+            <admin-component></admin-component>
             <!-- end user join -->
          </div>
 
@@ -55,7 +58,7 @@
             <!-- chat box 
             <chat-component v-bind:content="messages"></chat-component>
             -->
-
+            
             <!-- start form to send new message to chat box -->
             <div class="controls" class="field has-addons">
                <input v-model="number" placeholder="type in number" type="text" class="u-full-width">

@@ -11,7 +11,7 @@ const chatComponent = {
 }
 
 // Users Component
-const usersComponent = {
+const users = {
     template: ` <div class="user-list">
                    <h6>Active Users ({{users.length}})</h6>
                    <ul v-for="user in users">
@@ -23,6 +23,20 @@ const usersComponent = {
                    </ul>
                </div>`,
     props: ['users']
+}
+
+// admin's clients
+const adminClients = {
+    template: ` <div class="user-list" v-if="clients.length > 0">
+                   <h6>Clients: ({{clients.length}})</h6>
+                   <ul v-for="obj in clients">
+                       <li>
+                            <span>{{obj.phone}}</span>
+                       </li>
+                       <hr>
+                   </ul>
+               </div>`,
+    props: ['clients']
 }
 
 // Welcome Component
@@ -44,12 +58,12 @@ const app = new Vue({
         firstName: '',
         lastName: '',
         number: '',
-        email: "",
-        admin: "",
         client: {},
+        admin: "",
+        email:"",
         clients: [],
         signedUp: false,
-        unsuccessful: false,
+        successful: false,
         loggedIn: false,
         clientMessage: false
 
@@ -75,9 +89,9 @@ const app = new Vue({
         } 
     },
     components: {
-        'users-component': usersComponent,
         'chat-component': chatComponent,
-        'welcome-component': welcomeComponent
+        'welcome-component': welcomeComponent,
+        'admin-component': adminClients
     }
 })
 
@@ -97,17 +111,18 @@ socket.on('successful-join', adminEmail => {
         app.admin = adminEmail
         app.loggedIn = true
     }
-    app.unsuccessful = false
-    app.users.push(user)
+    app.successful = true
 })
 
 socket.on('unsuccessful-join', user => {
-    app.unsuccessful = true
+    app.successful = false
 })
 
 // TODO: succcessful-sign-up
-socket.on('successful-sign-up', number => {
-    app.clients.push(number)
+socket.on('successful-sign-up', numberObj => {
+    console.log('help', numberObj);
+    app.clients.push(numberObj)
+    console.log(numberObj.phone)
     app.clientMessage = true
 })
 
@@ -117,5 +132,6 @@ socket.on('successful-sign-up', number => {
 socket.on('successful-message', content => {
     // clear the message after success send
     app.message = ''
-    app.messages.push(content)
+    app.clients.push(content)
+    
 })
