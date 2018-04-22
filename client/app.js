@@ -1,9 +1,43 @@
+const chatComponent = {
+    template: ` <div class="chat-box">
+                   <p v-for="data in content">
+                       <img v-bind:src=data.user.img class="circle" width="30px">
+                       <span><strong>{{data.user.name}}</strong> <small>{{data.date}}</small><span>
+                       <br />
+                       {{data.message}}
+                   </p>
+               </div>`,
+    props: ['content']
+}
 
+// Users Component
+const usersComponent = {
+    template: ` <div class="user-list">
+                   <h6>Active Users ({{users.length}})</h6>
+                   <ul v-for="user in users">
+                       <li>
+                            <img v-bind:src=user.img class="circle" width="30px">
+                            <span>{{user.name}}</span>
+                       </li>
+                       <hr>
+                   </ul>
+               </div>`,
+    props: ['users']
+}
 
-const 
-    path = require('path')
+// Welcome Component
+const welcomeComponent = {
+    template: `<div class="me h5" style="text-align: center" v-if=user.name>
+                    <h3>Welcome</h3>
+                    <img class="circle" v-bind:src=user.img width=30%>
+                    <h4>{{user.name}}</h4>
+                </div>`,
+    props: ['user']
+}
 
 const socket = io()
+
+
 const app = new Vue({
     el: '#rmndfl-app',
     data: {
@@ -16,6 +50,7 @@ const app = new Vue({
         clients: [],
         signedUp: false,
         unsuccessful: false,
+        loggedIn: false,
         clientMessage: false
 
     },
@@ -36,7 +71,7 @@ const app = new Vue({
         customerSignUp: function() {
             if(!this.number)
                 return
-            socket.emit('signed-up', number)
+            socket.emit('signed-up', this.number)
         } 
     },
     components: {
@@ -48,12 +83,12 @@ const app = new Vue({
 
 
 // Client Side Socket Event
-socket.on('refresh-messages', messages => {
-    app.messages = messages
-})
-socket.on('refresh-users', users => {
-    app.users = users
-})
+// socket.on('refresh-messages', messages => {
+//     app.messages = messages
+// })
+// socket.on('refresh-users', users => {
+//     app.users = users
+// })
 
 socket.on('successful-join', adminEmail => {
     // the successful-join event is emitted on all connections (open browser windows)
@@ -71,8 +106,8 @@ socket.on('unsuccessful-join', user => {
 })
 
 // TODO: succcessful-sign-up
-socket.on('successful-sign-up', client => {
-    app.clients.add(client)
+socket.on('successful-sign-up', number => {
+    app.clients.push(number)
     app.clientMessage = true
 })
 

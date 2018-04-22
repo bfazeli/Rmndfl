@@ -4,8 +4,8 @@ const
 
 const
     app = express(),
-    server = require('http').Server(app),
-    telesign = require('telesignsdk')
+    server = require('http').Server(app)
+    
 
 app.use(express.static(path.join(__dirname, '..', '/client')))
 require('./sockets')(server)

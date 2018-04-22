@@ -27,21 +27,21 @@
 
          <!-- users column -->
          <div class="col s3">
-            <!-- Welcome comp -->
-            <welcome-component v-bind:user="user"></welcome-component>
+            <!-- Welcome comp 
+            <welcome-component v-bind:email="email"></welcome-component> -->
 
             <!-- active users component-->
-            <users-component v-bind:users="users"></users-component>
+             <!-- <users-component v-bind:email="users"></users-component> -->
 
             <!-- start user join -->
             <div class="user-login" v-show="!loggedIn">
-               <input v-model="userName" placeholder="name" type="text" class="u-full-width">
-               <button v-on:click="joinUser" :disabled="!userName" class="btn-small waves-effect waves-light" type="submit">
+               <input v-model="email" placeholder="name" type="text" class="u-full-width">
+               <button v-on:click="joinUser" :disabled="!email" class="btn-small waves-effect waves-light" type="submit">
                   Login as Admin
                </button>
 
                <p v-show="unsuccessful" class="failed">
-                   *Sorry, the email {{userName}} is incorrect.
+                   *Sorry, the email {{email}} is incorrect.
                </p>
 
             </div>
@@ -50,15 +50,16 @@
 
 
          <!-- message box column-->
-         <div class="col s9" v-show="loggedIn">
+         <div class="col s9">
 
-            <!-- chat box -->
+            <!-- chat box 
             <chat-component v-bind:content="messages"></chat-component>
+            -->
 
             <!-- start form to send new message to chat box -->
             <div class="controls" class="field has-addons">
-               <input v-model="message" placeholder="write message" type="text" class="u-full-width">
-               <button v-on:click="sendMessage" :disabled="!message" class="btn-small waves-effect waves-light" type="submit">
+               <input v-model="number" placeholder="type in number" type="text" class="u-full-width">
+               <button v-on:click="customerSignUp" :disabled="!number" class="btn-small waves-effect waves-light" type="submit">
                   <i class="material-icons left">send</i>Send
                </button>
             </div>
