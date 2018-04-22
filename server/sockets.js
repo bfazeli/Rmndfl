@@ -27,8 +27,9 @@ module.exports = (server) => {
 
         socket.on('join-user', email => {
             if (email == adminEmail) {
-                
-                io.emit('successful-join', email)
+                const admin = {}
+                admin.email = email
+                io.emit('successful-join', admin)
             }
             else {
                 io.emit('unsuccessful-join', email)
@@ -52,19 +53,6 @@ module.exports = (server) => {
                     console.error("Unable to send message. " + error);
                     io.emit('unsuccessful-sign-up')
                 }
-                // if(err){
-                //     console.log("Error: Could not reach TeleSign's servers");
-                //     console.error(err); // network failure likely cause for error
-                    
-                    
-                // }
-                // else{
-                //     console.log("YAY!, the SMS message is being sent now by TeleSign!");
-                //     console.log(reply);
-                //     referenceId=reply.reference_id; // save the reference_id to check status of the message
-                    
-                    
-                // }
             },
             phoneNumber,
             message,

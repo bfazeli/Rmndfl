@@ -27,7 +27,7 @@ const users = {
 
 // admin's clients
 const adminClients = {
-    template: ` <div class="user-list" v-if="clients.length > 0">
+    template: ` <div class="user-list">
                    <h6>Clients: ({{clients.length}})</h6>
                    <ul v-for="obj in clients">
                        <li>
@@ -41,12 +41,12 @@ const adminClients = {
 
 // Welcome Component
 const welcomeComponent = {
-    template: `<div class="me h5" style="text-align: center" v-if=user.name>
+    template: `<div class="me h5" style="text-align: center" v-if=admin.email>
                     <h3>Welcome</h3>
-                    <img class="circle" v-bind:src=user.img width=30%>
-                    <h4>{{user.name}}</h4>
+                    <img class="circle" v-bind:src="https://robohash.org/admin?set=set3" width=30%>
+                    <h4>{{admin.email}}</h4>
                 </div>`,
-    props: ['user']
+    props: ['admin']
 }
 
 const socket = io()
@@ -59,11 +59,11 @@ const app = new Vue({
         lastName: '',
         number: '',
         client: {},
-        admin: "",
-        email:"",
+        admin: {},
+        email: "",
         clients: [],
         signedUp: false,
-        successful: false,
+        successful: true,
         loggedIn: false,
         clientMessage: false
 
@@ -107,10 +107,12 @@ const app = new Vue({
 socket.on('successful-join', adminEmail => {
     // the successful-join event is emitted on all connections (open browser windows)
     // so we need to ensure the loggedIn is set to true and user is set for matching user only
-    if (adminEmail === app.admin) {
+    if (adminEmail.email === app.email) {
         app.admin = adminEmail
         app.loggedIn = true
-    }
+        console.log("We in bois")
+        console.log(app.admin)
+    } else { console.log("We not in this")}
     app.successful = true
 })
 

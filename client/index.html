@@ -27,8 +27,8 @@
 
          <!-- users column -->
          <div class="col s3">
-            <!-- Welcome comp 
-            <welcome-component v-bind:email="email"></welcome-component> -->
+            <!-- Welcome comp -->
+            <welcome-component v-bind:admin="admin"></welcome-component>
 
             <!-- active users component-->
              <!-- <users-component v-bind:email="users"></users-component> -->
@@ -47,7 +47,7 @@
             </div>
 
             <!-- Display clients -->
-            <admin-component></admin-component>
+            <admin-component v-bind:clients="clients"></admin-component>
             <!-- end user join -->
          </div>
 
@@ -58,7 +58,7 @@
             <!-- chat box 
             <chat-component v-bind:content="messages"></chat-component>
             -->
-            
+
             <!-- start form to send new message to chat box -->
             <div class="controls" class="field has-addons">
                <input v-model="number" placeholder="type in number" type="text" class="u-full-width">
